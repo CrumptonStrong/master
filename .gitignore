@@ -1,0 +1,8 @@
+# Firebase local state
+.firebase/
+
+# Node dependencies
+functions/node_modules/
+
+# VS Code workspace
+.vscode/
