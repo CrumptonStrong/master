@@ -1,18 +1,19 @@
 const admin = require('firebase-admin');
-const functions = require('firebase-functions');
+const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const { onMessagePublished } = require('firebase-functions/v2/pubsub');
 
 admin.initializeApp();
 const db = admin.firestore();
+const callableOpts = { cpu: 1, memory: '512MiB', timeoutSeconds: 60 };
 
 // =========================================================================
 // FUNCTION 1: SUBMIT SCORE & SOLVE TIES (Asynchronous Leaderboard Rule)
 // =========================================================================
-exports.submitTournamentScore = functions.https.onCall(async (data, context) => {
-  if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'Login required.');
+exports.submitTournamentScore = onCall(callableOpts, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Login required.');
 
-  const uid = context.auth.uid;
-  const { tournamentId, finalScore } = data;
+  const uid = request.auth.uid;
+  const { tournamentId, finalScore } = request.data;
   
   const leaderboardRef = db.collection('tournament_leaderboards')
                            .where('tournament_id', '==', tournamentId)
@@ -47,8 +48,8 @@ exports.submitTournamentScore = functions.https.onCall(async (data, context) => 
 // =========================================================================
 // FUNCTION 2: FETCH LEADERBOARD WITH STRICT NO-TIE ORDERING
 // =========================================================================
-exports.getTournamentLeaderboard = functions.https.onCall(async (data, context) => {
-  const { tournamentId, limitAmount = 50 } = data;
+exports.getTournamentLeaderboard = onCall(callableOpts, async (request) => {
+  const { tournamentId, limitAmount = 50 } = request.data;
 
   const leaderboardSnapshot = await db.collection('tournament_leaderboards')
     .where('tournament_id', '==', tournamentId)
@@ -65,13 +66,13 @@ exports.getTournamentLeaderboard = functions.https.onCall(async (data, context) 
 // =========================================================================
 // FUNCTION 3: 1V1 MATCHMAKING & AI COMPETITOR BACKUP
 // =========================================================================
-exports.matchMakeAndDeal = functions.https.onCall(async (data, context) => {
-  if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'Login required.');
+exports.matchMakeAndDeal = onCall(callableOpts, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Login required.');
 
-  const uid = context.auth.uid;
-  const wager = data.wager || 2.50;
-  const playMode = data.mode || 'multiplayer';
-  const aiDifficulty = data.difficulty || 'medium';
+  const uid = request.auth.uid;
+  const wager = request.data.wager || 2.50;
+  const playMode = request.data.mode || 'multiplayer';
+  const aiDifficulty = request.data.difficulty || 'medium';
   
   const queueRef = db.collection('matchmaking_queue');
   const gameRef = db.collection('games').doc();
@@ -164,28 +165,28 @@ exports.distributeTournamentPrizes = onMessagePublished('payout-topic', async (e
 // =========================================================================
 // FUNCTION 5: EXECUTE PLAYER MOVE & CALCULATE ALL FIVES SCORE
 // =========================================================================
-exports.playTileMove = functions.https.onCall(async (data, context) => {
-  if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'Login required.');
+exports.playTileMove = onCall(callableOpts, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Login required.');
 
-  const uid = context.auth.uid;
-  const { gameId, tile, edge, tileId } = data;
+  const uid = request.auth.uid;
+  const { gameId, tile, edge, tileId } = request.data;
   
   const gameRef = db.collection('games').doc(gameId);
 
   return db.runTransaction(async (transaction) => {
     const gameDoc = await transaction.get(gameRef);
-    if (!gameDoc.exists) throw new functions.https.HttpsError('not-found', 'Game instance not found.');
+    if (!gameDoc.exists) throw new HttpsError('not-found', 'Game instance not found.');
 
     const game = gameDoc.data();
-    if (game.status !== 'active') throw new functions.https.HttpsError('failed-precondition', 'Game is not active.');
-    if (game.players[game.turnIndex || 0] !== uid) throw new functions.https.HttpsError('failed-precondition', 'Not your turn.');
+    if (game.status !== 'active') throw new HttpsError('failed-precondition', 'Game is not active.');
+    if (game.players[game.turnIndex || 0] !== uid) throw new HttpsError('failed-precondition', 'Not your turn.');
 
     let board = game.board || [];
     let scoreGained = 0;
 
     if (board.length === 0) {
       if (tile[0] !== 6 || tile[1] !== 6) {
-        throw new functions.https.HttpsError('invalid-argument', 'Traditional Rules: Must open with the Big 6.');
+        throw new HttpsError('invalid-argument', 'Traditional Rules: Must open with the Big 6.');
       }
       board.push(tile);
     } else {
@@ -195,11 +196,11 @@ exports.playTileMove = functions.https.onCall(async (data, context) => {
       if (edge === 'left') {
         if (tile[1] === leftBoardEdge) board.unshift(tile);
         else if (tile[0] === leftBoardEdge) board.unshift([tile[1], tile[0]]);
-        else throw new functions.https.HttpsError('invalid-argument', 'Tile does not match left edge.');
+        else throw new HttpsError('invalid-argument', 'Tile does not match left edge.');
       } else if (edge === 'right') {
         if (tile[0] === rightBoardEdge) board.push(tile);
         else if (tile[1] === rightBoardEdge) board.push([tile[1], tile[0]]);
-        else throw new functions.https.HttpsError('invalid-argument', 'Tile does not match right edge.');
+        else throw new HttpsError('invalid-argument', 'Tile does not match right edge.');
       }
 
       const boardSum = board[0][0] + board[board.length - 1][1];
@@ -229,11 +230,11 @@ exports.playTileMove = functions.https.onCall(async (data, context) => {
 // =========================================================================
 // FUNCTION 6: GLOBAL CHAT & GIFTING ENGINE
 // =========================================================================
-exports.sendChatWithGift = functions.https.onCall(async (data, context) => {
-  if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'Login required.');
+exports.sendChatWithGift = onCall(callableOpts, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Login required.');
 
-  const uid = context.auth.uid;
-  const { message, giftItemId, giftCost, recipientId } = data;
+  const uid = request.auth.uid;
+  const { message, giftItemId, giftCost, recipientId } = request.data;
 
   return db.runTransaction(async (t) => {
     if (giftItemId && giftCost > 0) {
@@ -242,7 +243,7 @@ exports.sendChatWithGift = functions.https.onCall(async (data, context) => {
       const currentBalance = walletDoc.exists ? walletDoc.data().balance : 0;
 
       if (currentBalance < giftCost) {
-        throw new functions.https.HttpsError('failed-precondition', 'Insufficient cash for this gift.');
+        throw new HttpsError('failed-precondition', 'Insufficient cash for this gift.');
       }
       t.update(walletRef, { balance: currentBalance - giftCost });
 
@@ -268,20 +269,20 @@ exports.sendChatWithGift = functions.https.onCall(async (data, context) => {
 // =========================================================================
 // FUNCTION 7: GENERATE REFERRAL INVITE
 // =========================================================================
-exports.generateInviteCode = functions.https.onCall(async (data, context) => {
-  if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'Login required.');
-  const inviteCode = context.auth.uid.substring(0, 6).toUpperCase();
+exports.generateInviteCode = onCall(callableOpts, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Login required.');
+  const inviteCode = request.auth.uid.substring(0, 6).toUpperCase();
   return { code: inviteCode, link: `https://brickyard-dominoes.com/invite/${inviteCode}` };
 });
 
 // =========================================================================
 // FUNCTION 8: PROCESS DEPOSIT & $20 REFERRAL BONUS
 // =========================================================================
-exports.processDeposit = functions.https.onCall(async (data, context) => {
-  if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'Login required.');
+exports.processDeposit = onCall(callableOpts, async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Login required.');
 
-  const uid = context.auth.uid;
-  const { depositAmount } = data;
+  const uid = request.auth.uid;
+  const { depositAmount } = request.data;
   const playerRef = db.collection('player_stats').doc(uid);
 
   return db.runTransaction(async (t) => {
