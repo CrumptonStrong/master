@@ -58,6 +58,7 @@
         }
 
         .skin-ivory { /* Base Default */ }
+        .skin-ivory { --bg: #ffffff; --shadow: #f0f0f0; --pip: #0f172a; --border: #e8e8e8; }
         .skin-midnight { --bg: #1e293b; --shadow: #020617; --pip: #f8fafc; --border: #334155; }
         .skin-brickyard-clay { --bg: #991b1b; --shadow: #450a0a; --pip: #fef2f2; --border: #b91c1c; }
         .skin-white-oak { --bg: #d1bfae; --shadow: #8c7b6b; --pip: #292524; --border: #e7d5c4; }

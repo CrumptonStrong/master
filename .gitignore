@@ -6,3 +6,6 @@ functions/node_modules/
 
 # VS Code workspace
 .vscode/
+
+# Firebase client config
+public/firebase-config.js
