@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brickyard Dominoes | Premium Event Tournaments</title>
+    <title>Brickyard Dominoes | The Hustle</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,120 +11,261 @@
             background-color: #020617; 
             color: #f8fafc; 
             font-family: 'Inter', sans-serif; 
-            background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
-        /* Custom Brickyard Table Texture */
-        .brickyard-table {
+        
+        /* ==========================================
+           LOCATION ENVIRONMENTS (THE PARKS)
+           ========================================== */
+        
+        /* 1. Landing Page: Full Screen Logo Background (Optimized Scaling) */
+        .loc-default {
+            background-color: #0b1528; /* Blends with the dark edges of your logo */
+            background-image: url('logo.avif');
+            background-size: contain; /* Prevents the zoom/cropping */
+            background-position: center 25%; /* Centers it slightly higher to make room for bottom buttons */
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* 2. Black Wall Street, Tulsa */
+        .loc-tulsa {
+            background-color: #1a1710;
+            background-image: linear-gradient(rgba(10,10,10,0.85), rgba(0,0,0,0.98)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Tulsa_Skyline_from_the_air.jpg/1600px-Tulsa_Skyline_from_the_air.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        /* 3. The A, Atlanta */
+        .loc-atlanta {
+            background-color: #2a0f0a;
+            background-image: linear-gradient(rgba(42,15,10,0.85), rgba(0,0,0,0.98)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Atlanta_Skyline_from_Buckhead.jpg/1600px-Atlanta_Skyline_from_Buckhead.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        /* 4. South Side, Chicago */
+        .loc-chicago {
+            background-color: #0f172a;
+            background-image: linear-gradient(rgba(15,23,42,0.85), rgba(2,6,23,0.98)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Chicago_skyline_from_Adler_Planetarium_2016.jpg/1600px-Chicago_skyline_from_Adler_Planetarium_2016.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        /* 5. Leimert Park, LA */
+        .loc-la {
+            background-color: #431407;
+            background-image: linear-gradient(rgba(67,20,7,0.85), rgba(0,0,0,0.98)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Los_Angeles_with_Mount_San_Antonio.jpg/1600px-Los_Angeles_with_Mount_San_Antonio.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        /* 6. Rucker Park, NYC */
+        .loc-nyc {
+            background-color: #061814;
+            background-image: linear-gradient(rgba(6,24,20,0.85), rgba(0,0,0,0.98)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1600px-New_york_times_square-terabass.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        /* 7. H-Town, Houston */
+        .loc-houston {
+            background-color: #2e1065;
+            background-image: linear-gradient(rgba(46,16,101,0.85), rgba(0,0,0,0.98)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Houston_skyline_from_Eleanor_Tinsley_Park.jpg/1600px-Houston_skyline_from_Eleanor_Tinsley_Park.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        /* 8. The Brickyard (Indoor) */
+        .loc-brickyard {
             background-color: #291a15;
             background-image: 
                 linear-gradient(30deg, #1b100d 12%, transparent 12.5%, transparent 87%, #1b100d 87.5%, #1b100d),
                 linear-gradient(150deg, #1b100d 12%, transparent 12.5%, transparent 87%, #1b100d 87.5%, #1b100d),
-                linear-gradient(30deg, #1b100d 12%, transparent 12.5%, transparent 87%, #1b100d 87.5%, #1b100d),
-                linear-gradient(150deg, #1b100d 12%, transparent 12.5%, transparent 87%, #1b100d 87.5%, #1b100d),
-                linear-gradient(60deg, #3a221a 25%, transparent 25.5%, transparent 75%, #3a221a 75.5%, #3a221a),
                 linear-gradient(60deg, #3a221a 25%, transparent 25.5%, transparent 75%, #3a221a 75.5%, #3a221a);
             background-size: 40px 70px;
-            background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
-            box-shadow: inset 0 0 120px rgba(0,0,0,0.85);
         }
-        /* Logo Watermark */
-        .table-logo-badge {
-            position: absolute;
-            top: 24px;
-            left: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0.25;
-            pointer-events: none;
-            user-select: none;
-        }
-        .gold-border { border: 2px solid #d97706; box-shadow: 0 0 15px rgba(217, 119, 6, 0.3); }
+
+        .table-shadow { box-shadow: inset 0 0 150px rgba(0,0,0,1); }
+        .gold-border { border: 2px solid #d97706; box-shadow: 0 0 25px rgba(217, 119, 6, 0.4); }
         .branding-font { font-family: 'Orbitron', sans-serif; letter-spacing: 0.1em; }
         
         /* Skin Variables */
         .domino-tile {
-            border-radius: 6px;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px;
+            border-radius: 6px; position: relative; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: space-between; padding: 6px;
             background: var(--bg, linear-gradient(to bottom, #ffffff, #f1f5f9));
-            box-shadow: 4px 4px 0px var(--shadow, #cbd5e1);
-            color: var(--pip, #0f172a);
-            border: 1px solid var(--border, #e2e8f0);
+            box-shadow: 4px 4px 0px var(--shadow, #cbd5e1); color: var(--pip, #0f172a);
+            border: 1px solid var(--border, #e2e8f0); cursor: pointer;
         }
-
-        .skin-ivory { /* Base Default */ }
-        .skin-ivory { --bg: #ffffff; --shadow: #f0f0f0; --pip: #0f172a; --border: #e8e8e8; }
+        .skin-ivory { }
         .skin-midnight { --bg: #1e293b; --shadow: #020617; --pip: #f8fafc; --border: #334155; }
         .skin-brickyard-clay { --bg: #991b1b; --shadow: #450a0a; --pip: #fef2f2; --border: #b91c1c; }
         .skin-white-oak { --bg: #d1bfae; --shadow: #8c7b6b; --pip: #292524; --border: #e7d5c4; }
-        .skin-smooth-ash { --bg: #e5e5dc; --shadow: #a3a398; --pip: #1c1917; --border: #f5f5f0; }
-        .skin-chavez-blue { --bg: #005a9c; --shadow: #002a4a; --pip: #ffffff; --border: #3385c6; }
-        .skin-biscayne-neon { --bg: #171717; --shadow: #000000; --pip: #ec4899; --border: #06b6d4; }
-        .skin-carbon-fiber { --bg: #171717; --shadow: #000000; --pip: #a3a3a3; --border: #404040; }
         .skin-pure-gold { --bg: linear-gradient(135deg, #fcd34d, #d97706); --shadow: #78350f; --pip: #451a03; --border: #fde68a; }
-        .skin-the-advocate { --bg: #f8fafc; --shadow: #cbd5e1; --pip: #10b981; --border: #34d399; }
+        
+        .match-scroll::-webkit-scrollbar { width: 6px; }
+        .match-scroll::-webkit-scrollbar-track { background: transparent; }
+        .match-scroll::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 20px; }
+        
+        .screen { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
+        .screen.active { display: flex; opacity: 1; }
+        
+        .table-logo-badge {
+            position: absolute; top: 24px; left: 24px; opacity: 0.35;
+            pointer-events: none; user-select: none; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+        }
+
+        @media (min-width: 768px) {
+            .loc-default {
+                background-size: 60%; /* Scales it slightly down on large desktop monitors for a cleaner look */
+            }
+        }
     </style>
 </head>
-<body class="flex flex-col min-h-screen overflow-hidden">
+<body id="app-background" class="loc-default flex flex-col min-h-screen overflow-hidden transition-all duration-1000">
 
-    <header class="p-4 bg-slate-950/80 backdrop-blur-md border-b border-amber-900/50 flex justify-between items-center z-50">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 gold-border rounded-lg flex items-center justify-center bg-slate-900">
-                <span class="text-amber-500 font-black text-xl italic">B</span>
+    <div id="loading-overlay" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[400] flex flex-col items-center justify-center transition-opacity">
+        <div class="w-12 h-12 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mb-4"></div>
+        <h2 class="branding-font text-white font-black tracking-widest animate-pulse">PROCESSING...</h2>
+    </div>
+
+    <div id="toast-container" class="fixed top-4 right-4 z-[500] flex flex-col gap-2 pointer-events-none"></div>
+
+    <div id="auth-modal" class="hidden fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[300] flex flex-col items-center justify-center p-4">
+        <div class="bg-slate-900 border border-amber-500/50 rounded-2xl w-full max-w-md p-6 shadow-2xl text-center">
+            
+            <img src="logo.avif" alt="Brickyard Dominoes" class="w-40 mx-auto mb-4 drop-shadow-[0_0_15px_rgba(217,119,6,0.3)]">
+            <p class="text-xs text-slate-400 mb-6">Enter your phone number to secure your wallet and access real-money tables.</p>
+            
+            <div id="phone-input-section" class="flex flex-col gap-3">
+                <input type="tel" id="phone-number" placeholder="+1 (555) 555-5555" class="bg-slate-950 text-white text-center text-lg px-4 py-3 rounded-lg border border-slate-700 outline-none focus:border-amber-500 transition-colors">
+                
+                <div class="flex items-start gap-2 mt-1 mb-2 text-left">
+                    <input type="checkbox" id="tos-checkbox" class="mt-1 w-4 h-4 accent-amber-500 bg-slate-950 border-slate-700 rounded cursor-pointer shrink-0">
+                    <label for="tos-checkbox" class="text-[9px] text-slate-400 leading-tight cursor-pointer">
+                        I am 18+ and accept the <a href="#" class="text-amber-500 hover:text-amber-400 underline">Terms of Service</a> & Skill-Gaming Agreement. I confirm I am not located in a restricted territory.
+                    </label>
+                </div>
+
+                <div id="recaptcha-container" class="flex justify-center my-1"></div>
+                <button onclick="sendOTP()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-black px-4 py-3 rounded-lg uppercase tracking-wider transition-colors shadow-md">Send Code</button>
+                <button onclick="closeAuthModal()" class="text-[10px] text-slate-500 uppercase hover:text-white mt-2">Cancel</button>
             </div>
-            <h1 class="branding-font text-xl font-black text-white hidden md:block">BRICKYARD <span class="text-amber-500">DOMINOES</span></h1>
-        </div>
-        
-        <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 p-1 rounded-lg">
-            <span class="text-xs text-slate-400 pl-2 uppercase font-bold">Tiles:</span>
-            <select id="skin-selector" onchange="equipSkin(this.value)" class="bg-slate-800 text-amber-500 text-sm p-1 rounded outline-none cursor-pointer">
-                <option value="skin-ivory">Classic Ivory</option>
-                <option value="skin-midnight">Midnight Black</option>
-                <option value="skin-brickyard-clay">Brickyard Clay</option>
-                <option value="skin-white-oak">White Oak</option>
-                <option value="skin-smooth-ash">Smooth Ash</option>
-                <option value="skin-chavez-blue">Chavez Blue</option>
-                <option value="skin-biscayne-neon">Biscayne Neon</option>
-                <option value="skin-carbon-fiber">Carbon Fiber</option>
-                <option value="skin-pure-gold">Pure Gold</option>
-                <option value="skin-the-advocate">The Advocate</option>
-            </select>
-        </div>
 
+            <div id="otp-input-section" class="hidden flex flex-col gap-3">
+                <input type="text" id="otp-code" placeholder="6-Digit Code" class="bg-slate-950 text-white text-center tracking-widest text-xl px-4 py-3 rounded-lg border border-slate-700 outline-none focus:border-amber-500 transition-colors">
+                <button onclick="verifyOTP()" class="bg-green-600 hover:bg-green-500 text-white font-black px-4 py-3 rounded-lg uppercase tracking-wider transition-colors shadow-md">Verify & Login</button>
+                <button onclick="resetAuthUI()" class="text-[10px] text-slate-500 uppercase hover:text-white mt-2">← Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="location-modal" class="hidden fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[300] flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-3xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="branding-font text-xl font-black text-white uppercase">Choose Your Playground</h2>
+                <button onclick="closeLocationModal()" class="text-slate-400 hover:text-white text-3xl leading-none">&times;</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto match-scroll pr-2">
+                <button onclick="equipLocation('loc-tulsa')" class="bg-slate-950 hover:border-amber-500 border border-slate-800 p-4 rounded-xl text-left transition-all flex justify-between items-center group shadow-md hover:shadow-[0_0_20px_rgba(217,119,6,0.3)]">
+                    <div>
+                        <h3 class="text-amber-500 font-black uppercase text-sm group-hover:text-amber-400 tracking-wider">Black Wall Street</h3>
+                        <p class="text-[10px] text-slate-400">Tulsa, Oklahoma</p>
+                    </div>
+                    <span class="text-2xl">🎩</span>
+                </button>
+                <button onclick="equipLocation('loc-atlanta')" class="bg-slate-950 hover:border-red-500 border border-slate-800 p-4 rounded-xl text-left transition-all flex justify-between items-center group shadow-md hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]">
+                    <div>
+                        <h3 class="text-red-500 font-black uppercase text-sm group-hover:text-red-400 tracking-wider">The A</h3>
+                        <p class="text-[10px] text-slate-400">Atlanta, Georgia</p>
+                    </div>
+                    <span class="text-2xl">🍑</span>
+                </button>
+                <button onclick="equipLocation('loc-chicago')" class="bg-slate-950 hover:border-cyan-500 border border-slate-800 p-4 rounded-xl text-left transition-all flex justify-between items-center group shadow-md hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+                    <div>
+                        <h3 class="text-cyan-500 font-black uppercase text-sm group-hover:text-cyan-400 tracking-wider">South Side</h3>
+                        <p class="text-[10px] text-slate-400">Chicago, Illinois</p>
+                    </div>
+                    <span class="text-2xl">🌬️</span>
+                </button>
+                <button onclick="equipLocation('loc-la')" class="bg-slate-950 hover:border-orange-500 border border-slate-800 p-4 rounded-xl text-left transition-all flex justify-between items-center group shadow-md hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                    <div>
+                        <h3 class="text-orange-500 font-black uppercase text-sm group-hover:text-orange-400 tracking-wider">Leimert Park</h3>
+                        <p class="text-[10px] text-slate-400">Los Angeles, CA</p>
+                    </div>
+                    <span class="text-2xl">🌴</span>
+                </button>
+                <button onclick="equipLocation('loc-nyc')" class="bg-slate-950 hover:border-green-500 border border-slate-800 p-4 rounded-xl text-left transition-all flex justify-between items-center group shadow-md hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+                    <div>
+                        <h3 class="text-green-500 font-black uppercase text-sm group-hover:text-green-400 tracking-wider">Rucker Park</h3>
+                        <p class="text-[10px] text-slate-400">Harlem, New York</p>
+                    </div>
+                    <span class="text-2xl">🗽</span>
+                </button>
+                <button onclick="equipLocation('loc-houston')" class="bg-slate-950 hover:border-purple-500 border border-slate-800 p-4 rounded-xl text-left transition-all flex justify-between items-center group shadow-md hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                    <div>
+                        <h3 class="text-purple-500 font-black uppercase text-sm group-hover:text-purple-400 tracking-wider">H-Town</h3>
+                        <p class="text-[10px] text-slate-400">Houston, Texas</p>
+                    </div>
+                    <span class="text-2xl">🤘</span>
+                </button>
+                <button onclick="equipLocation('loc-brickyard')" class="bg-slate-950 hover:border-slate-500 border border-slate-800 p-4 rounded-xl text-left transition-all flex justify-between items-center group shadow-md md:col-span-2">
+                    <div>
+                        <h3 class="text-slate-300 font-black uppercase text-sm group-hover:text-white tracking-wider">The Brickyard</h3>
+                        <p class="text-[10px] text-slate-400">Indoor High-Stakes Room</p>
+                    </div>
+                    <span class="text-2xl">🍸</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header id="global-header" class="hidden p-4 bg-slate-950/80 backdrop-blur-md border-b border-amber-900/50 flex justify-between items-center z-50">
+        <img src="logo.avif" alt="Brickyard Dominoes" class="h-10 md:h-12 w-auto cursor-pointer hover:scale-105 transition-transform" onclick="navigate('screen-landing')">
+        
         <div class="flex gap-4 items-center">
-            <div class="bg-slate-900 border border-slate-800 px-4 py-1 rounded-full text-sm flex gap-3">
-                <span class="text-slate-500">CASH: <span class="text-green-400 font-mono font-bold">$275.00</span></span>
+            <div class="bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full text-sm flex gap-3 items-center shadow-lg">
+                <span id="player-avatar-display" class="text-lg leading-none cursor-pointer hover:scale-110 transition-transform">🧢</span>
+                <span id="player-name-display" class="text-white font-bold text-[10px] uppercase tracking-widest hidden lg:block border-r border-slate-700 pr-3">LOADING...</span>
+                <span class="text-slate-500 text-xs font-bold pl-1 hidden sm:block">BAL: <span id="player-cash-display" class="text-green-400 font-mono font-bold text-sm">$0.00</span></span>
+                <span class="text-slate-500 text-xs font-bold border-l border-slate-700 pl-3">STAMPS: <span id="player-stamps-display" class="text-blue-400 font-mono font-bold text-sm">🎫 0</span></span>
             </div>
         </div>
     </header>
 
-    <main class="flex-grow relative flex items-center justify-center p-4">
-        <div id="game-table" class="brickyard-table w-full max-w-6xl aspect-video rounded-[3rem] border-[12px] border-slate-900 shadow-2xl relative flex items-center justify-center overflow-hidden">
+    <main class="flex-grow relative flex flex-col w-full h-full">
+
+        <section id="screen-landing" class="screen active relative w-full h-full flex-col items-center pb-12 z-10 min-h-[85vh]">
             
-            <div class="table-logo-badge font-black text-left">
-                <div class="flex items-center gap-2">
-                    <div class="w-7 h-7 border border-amber-500 rounded flex items-center justify-center bg-slate-950">
-                        <span class="text-amber-500 font-black text-sm italic">B</span>
-                    </div>
-                    <div class="branding-font text-xs text-white leading-none">BRICKYARD<br><span class="text-amber-500 text-[10px]">DOMINOES</span></div>
+            <button id="btn-login-top" onclick="handleLoginToggle()" class="absolute top-6 right-6 z-50 bg-slate-900/80 border border-amber-500/50 text-amber-500 font-black px-6 py-2 rounded-lg text-sm uppercase tracking-widest shadow-lg hover:bg-slate-800 transition-all backdrop-blur">
+                LOG IN
+            </button>
+
+            <div class="w-full max-w-md flex flex-col gap-4 px-6 mt-auto">
+                <button onclick="handlePlayClick()" class="w-full bg-gradient-to-b from-green-600 to-green-700 border-2 border-green-400/50 text-white font-black py-5 rounded-2xl text-2xl uppercase tracking-widest shadow-[0_0_30px_rgba(22,163,74,0.4)] hover:scale-105 transition-transform">
+                    PLAY NOW
+                </button>
+                <button onclick="handleLocationClick()" class="w-full bg-slate-900/90 backdrop-blur-sm border-2 border-amber-500/50 text-amber-500 font-black py-4 rounded-2xl text-lg uppercase tracking-widest shadow-lg hover:bg-slate-800 transition-colors flex items-center justify-center gap-3">
+                    <span>CHOOSE PLAYGROUND</span> <span class="text-2xl">📍</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="screen-lobby" class="screen w-full max-w-6xl mx-auto my-auto aspect-video rounded-[3rem] border-[12px] border-slate-900 shadow-2xl bg-slate-950/80 backdrop-blur-md overflow-hidden p-6 flex flex-col mt-4">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
+                <h2 class="branding-font text-xl font-black text-white uppercase">THE LOBBY</h2>
+                <div class="flex gap-2">
+                    <select id="skin-selector" onchange="equipSkin(this.value)" class="bg-slate-800 border border-slate-700 text-amber-500 text-xs px-2 py-1 rounded outline-none cursor-pointer">
+                        <option value="skin-ivory">Classic Ivory Tiles</option>
+                        <option value="skin-midnight">Midnight Black</option>
+                        <option value="skin-pure-gold">Pure Gold</option>
+                    </select>
+                    <button onclick="navigate('screen-landing')" class="text-xs text-slate-400 hover:text-white uppercase font-bold tracking-wider bg-slate-900 px-4 py-2 rounded-lg border border-slate-800">← Back</button>
                 </div>
             </div>
             
-            <div id="matchmaking-screen" class="w-full max-w-4xl mx-auto p-2 z-10 max-h-[90%] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center px-1 mb-2">
-                        <h2 class="branding-font text-sm font-black text-white uppercase tracking-wider">Live Tournaments</h2>
-                        <span class="text-[11px] text-green-400 font-mono bg-green-950/40 px-2 py-0.5 rounded-full border border-green-900">● Active</span>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-[1.3fr_1fr] gap-6 overflow-hidden h-full">
+                <div class="space-y-4 overflow-y-auto match-scroll pr-2 pb-10">
+                    
+                    <h2 class="branding-font text-sm font-black text-amber-500 uppercase tracking-wider sticky top-0 bg-slate-950/90 py-2 z-10 border-b border-slate-800">Live Events</h2>
 
-                    <div class="bg-gradient-to-b from-slate-950 to-slate-900 border border-amber-500/30 rounded-2xl overflow-hidden shadow-xl flex items-stretch">
-                        <div class="w-1/4 bg-gradient-to-br from-amber-950/30 to-slate-950 flex flex-col items-center justify-center border-r border-slate-800 p-2 text-center">
+                    <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/30 rounded-2xl overflow-hidden shadow-xl flex items-stretch">
+                        <div class="w-1/4 bg-amber-950/30 flex flex-col items-center justify-center border-r border-slate-800 p-2 text-center">
                             <span class="text-3xl">💼</span>
                             <span class="text-[9px] text-amber-400 font-bold tracking-widest uppercase mt-1 block">High Roller</span>
                         </div>
@@ -134,20 +275,21 @@
                                     <span class="text-amber-500">⏱ 3d 15h left</span>
                                     <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">Unlimited</span>
                                 </div>
-                                <h4 class="text-sm font-black text-white leading-tight uppercase">Big Time's Bounty</h4>
+                                <h4 class="text-sm font-black text-white uppercase">Big Time's Bounty</h4>
                                 <p class="text-green-400 font-mono text-lg font-bold mt-0.5">$1,505.00 <span class="text-[10px] text-slate-500">Est. Pool</span></p>
                             </div>
                             <div class="flex gap-2 items-center mt-2">
-                                <button onclick="playTournamentRun('big_time_30')" class="flex-grow bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black py-2 rounded-lg text-[11px] uppercase tracking-wider shadow-md hover:scale-[1.02] transition-transform">Play Entry</button>
-                                <div class="bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-center min-w-[60px]">
-                                    <span class="text-[9px] text-slate-400 font-mono font-bold">$30.00</span>
+                                <button onclick="playTournamentRun('big_time_30', 'cash')" class="flex-grow bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 font-black py-2 rounded-lg text-[11px] uppercase tracking-wider shadow-md hover:scale-[1.02]">Play Entry</button>
+                                <div class="bg-slate-900 border border-slate-800 px-3 py-1 rounded-lg text-center min-w-[60px]">
+                                    <span class="text-[9px] text-slate-400 block leading-none mb-0.5">FEE</span>
+                                    <span class="text-xs text-green-400 font-mono font-bold">$30</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-b from-slate-950 to-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex items-stretch">
-                        <div class="w-1/4 bg-slate-900 flex flex-col items-center justify-center border-r border-slate-800 p-2 text-center">
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex items-stretch">
+                        <div class="w-1/4 bg-slate-950 flex flex-col items-center justify-center border-r border-slate-800 p-2 text-center">
                             <span class="text-2xl">🚧</span>
                             <span class="text-[9px] text-slate-400 font-bold tracking-widest uppercase mt-1 block">Mid-Stakes</span>
                         </div>
@@ -157,163 +299,359 @@
                                     <span class="text-red-400">⏱ 19h 0m left</span>
                                     <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">Unlimited</span>
                                 </div>
-                                <h4 class="text-sm font-black text-white leading-tight uppercase">T Town Blitz</h4>
-                                <p class="text-green-400 font-mono text-lg font-bold mt-0.5">$800.00 <span class="text-[10px] text-slate-500 font-sans tracking-normal font-normal">Est. Pool</span></p>
+                                <h4 class="text-sm font-black text-white uppercase">T Town Blitz</h4>
+                                <p class="text-green-400 font-mono text-lg font-bold mt-0.5">$800.00 <span class="text-[10px] text-slate-500">Est. Pool</span></p>
                             </div>
                             <div class="flex gap-2 items-center mt-2">
-                                <button onclick="playTournamentRun('t_town_199')" class="flex-grow bg-slate-800 border border-slate-700 text-amber-500 font-black py-2 rounded-lg text-[11px] uppercase tracking-wider transition-transform active:scale-95">Play Entry</button>
-                                <div class="bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-center min-w-[60px]">
-                                    <span class="text-[9px] text-slate-400 font-mono font-bold">$1.99</span>
+                                <button onclick="playTournamentRun('t_town_199', 'cash')" class="flex-grow bg-slate-800 border border-slate-700 text-amber-500 font-black py-2 rounded-lg text-[11px] uppercase tracking-wider hover:bg-slate-700">Play Entry</button>
+                                <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded-lg text-center min-w-[60px]">
+                                    <span class="text-[9px] text-slate-400 block leading-none mb-0.5">FEE</span>
+                                    <span class="text-xs text-green-400 font-mono font-bold">$1.99</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <h2 class="branding-font text-sm font-black text-green-400 uppercase tracking-wider sticky top-0 bg-slate-950/90 py-2 z-10 border-b border-slate-800 mt-6">Live Head to Head</h2>
+
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex items-center justify-between shadow-md">
+                        <div>
+                            <h4 class="text-sm font-black text-white uppercase">The Yard</h4>
+                            <p class="text-[10px] text-slate-400">Winner Takes: <span class="text-green-400 font-bold">$1.00</span></p>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded text-center">
+                                <span class="text-[9px] text-slate-500 block leading-none">FEE</span>
+                                <span class="text-xs text-green-400 font-mono font-bold">$0.60</span>
+                            </div>
+                            <button onclick="playTournamentRun('yard_h2h', 'cash')" class="bg-green-700 hover:bg-green-600 text-white font-black px-4 py-2 rounded text-[10px] uppercase tracking-wider">Play</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex items-center justify-between shadow-md">
+                        <div>
+                            <h4 class="text-sm font-black text-white uppercase">The Block</h4>
+                            <p class="text-[10px] text-slate-400">Winner Takes: <span class="text-green-400 font-bold">$10.00</span></p>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded text-center">
+                                <span class="text-[9px] text-slate-500 block leading-none">FEE</span>
+                                <span class="text-xs text-green-400 font-mono font-bold">$6.00</span>
+                            </div>
+                            <button onclick="playTournamentRun('block_h2h', 'cash')" class="bg-green-700 hover:bg-green-600 text-white font-black px-4 py-2 rounded text-[10px] uppercase tracking-wider">Play</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-slate-900 to-amber-950/20 border border-amber-500/30 rounded-xl p-3 flex items-center justify-between shadow-md">
+                        <div>
+                            <h4 class="text-sm font-black text-amber-500 uppercase">The Penthouse</h4>
+                            <p class="text-[10px] text-slate-400">Winner Takes: <span class="text-green-400 font-bold">$500.00</span></p>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded text-center">
+                                <span class="text-[9px] text-slate-500 block leading-none">FEE</span>
+                                <span class="text-xs text-green-400 font-mono font-bold">$300.00</span>
+                            </div>
+                            <button onclick="playTournamentRun('penthouse_h2h', 'cash')" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-black px-4 py-2 rounded text-[10px] uppercase tracking-wider">Play</button>
+                        </div>
+                    </div>
+
+                    <h2 class="branding-font text-sm font-black text-blue-400 uppercase tracking-wider sticky top-0 bg-slate-950/90 py-2 z-10 border-b border-slate-800 mt-6">Practice Rounds</h2>
+
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex items-center justify-between shadow-md">
+                        <div>
+                            <h4 class="text-sm font-black text-white uppercase">Food Stamp Shootout</h4>
+                            <p class="text-[10px] text-slate-400">Warm up the skills.</p>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded text-center">
+                                <span class="text-[9px] text-slate-500 block leading-none">FEE</span>
+                                <span class="text-xs text-blue-400 font-mono font-bold">🎫 3</span>
+                            </div>
+                            <button onclick="playTournamentRun('practice', 'stamps')" class="bg-blue-600 hover:bg-blue-500 text-white font-black px-4 py-2 rounded text-[10px] uppercase tracking-wider">Play</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="bg-slate-950/95 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[400px]">
-                    <div class="bg-slate-900 border-b border-slate-800 p-3 flex justify-between items-center">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-full max-h-[500px]">
+                    <div class="bg-slate-950 border-b border-slate-800 p-3 flex justify-between items-center">
                         <div class="flex items-center gap-2">
                             <span class="text-xl">🍸</span>
                             <h3 class="branding-font text-sm font-black text-white uppercase tracking-wider">The Lounge</h3>
-                            <span class="text-[10px] text-green-400 font-mono animate-pulse ml-1">142 Online</span>
                         </div>
-                        <button onclick="generateInvite()" class="bg-green-600 hover:bg-green-500 text-slate-950 text-[10px] font-black px-3 py-1.5 rounded uppercase tracking-wider shadow-md flex items-center gap-1 transition-colors">
-                            <span>Get $20</span> <span>🤝</span>
-                        </button>
+                        <span class="text-[10px] text-green-400 font-mono animate-pulse bg-green-950/30 px-2 py-1 rounded border border-green-900">142 Online</span>
                     </div>
 
-                    <div id="chat-feed" class="flex-grow p-4 overflow-y-auto space-y-4 text-sm scroll-smooth">
+                    <div id="chat-feed" class="flex-grow p-4 overflow-y-auto space-y-4 text-sm scroll-smooth match-scroll bg-slate-900/50">
                         <div class="text-center text-[10px] text-slate-500 font-mono my-2 border-b border-slate-800/50 pb-2">
                             Welcome to the Brickyard. Keep it clean.
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="flex items-baseline gap-2">
                                 <span class="text-amber-500 font-bold text-xs uppercase tracking-wider">TulsaHustle918</span>
-                                <span class="text-slate-300 text-xs">Anyone running Big Time's Bounty tonight?</span>
-                            </div>
-                            <div class="bg-amber-950/30 border border-amber-900/50 rounded p-1.5 flex items-center gap-2 w-max">
-                                <span class="text-lg">🍾</span>
-                                <span class="text-[10px] text-amber-500 font-mono">Gifted a Vintage Bottle to the room</span>
+                                <span class="text-slate-300 text-xs">Anyone running the Penthouse tonight?</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-slate-900 border-t border-slate-800 p-2 flex gap-2">
-                        <input type="text" id="chat-input" placeholder="Talk your talk..." class="flex-grow bg-slate-950 text-white text-xs px-3 py-2 rounded border border-slate-700 outline-none focus:border-amber-500 transition-colors">
-                        <button onclick="openGiftStore()" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-3 py-2 rounded flex items-center justify-center transition-colors shadow-sm" title="Open Store">
-                            🎁
-                        </button>
-                        <button onclick="sendChatMessage()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-black px-4 py-2 rounded text-xs uppercase tracking-wider transition-colors shadow-sm">
-                            Send
-                        </button>
+                    <div class="bg-slate-950 border-t border-slate-800 p-2 flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Talk your talk..." class="flex-grow bg-slate-900 text-white text-xs px-3 py-2 rounded border border-slate-700 outline-none focus:border-amber-500 transition-colors">
+                        <button onclick="sendChatMessage()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-black px-4 py-2 rounded text-xs uppercase tracking-wider transition-colors shadow-sm">Send</button>
                     </div>
                 </div>
 
             </div>
+        </section>
 
-            <div id="score-hud" class="hidden absolute top-6 left-0 right-0 px-10 flex justify-between uppercase text-xs font-bold tracking-widest z-20">
-                <div class="bg-slate-900/80 p-3 rounded-lg border-l-4 border-amber-500">You: <span id="my-score-display" class="text-xl block text-white">0</span></div>
-                <div class="bg-slate-900/80 p-3 rounded-lg border-r-4 border-red-500 text-right">Opponent: <span class="text-xl block text-white">0</span></div>
-            </div>
-
-            <div id="player-hand" class="hidden absolute bottom-6 flex gap-4 h-24 z-20">
-                <div class="domino-tile skin-ivory w-10 h-20 flex-col shadow-lg">
-                    <div class="h-1/2 flex items-center justify-center"><span class="text-xl font-black">⚅</span></div>
-                    <div class="w-4/5 h-[2px] opacity-40 bg-slate-900"></div>
-                    <div class="h-1/2 flex items-center justify-center"><span class="text-xl font-black">⚅</span></div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <div id="gift-store-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-amber-500/50 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl">
-            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900">
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 border border-amber-500 rounded flex items-center justify-center bg-slate-950">
-                        <span class="text-amber-500 font-black text-xs italic">B</span>
-                    </div>
-                    <h2 class="branding-font text-lg font-black text-white">BRICKYARD <span class="text-amber-500">STORE</span></h2>
-                </div>
-                <div class="flex gap-4 items-center">
-                    <span class="text-xs text-slate-400 font-mono">Bal: <span class="text-green-400 font-bold">$275.00</span></span>
-                    <button onclick="closeGiftStore()" class="text-slate-400 hover:text-white text-2xl leading-none">&times;</button>
-                </div>
-            </div>
+        <section id="screen-game" class="screen w-full max-w-6xl mx-auto my-auto aspect-video relative flex-col items-center justify-center border-[12px] border-slate-900/50 rounded-[3rem] shadow-2xl overflow-hidden backdrop-blur-sm table-shadow mt-4">
             
-            <div class="p-4 overflow-y-auto max-h-[70vh]">
-                <h3 class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-3">Table Gifts & Drinks</h3>
-                <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-6">
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Rose', 3.00)">
-                        <div class="text-2xl mb-1">🌹</div><div class="text-[9px] text-slate-300 font-bold uppercase">Red Rose</div><div class="text-green-400 font-mono text-[10px] mt-1">$3</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Beer', 4.00)">
-                        <div class="text-2xl mb-1">🍺</div><div class="text-[9px] text-slate-300 font-bold uppercase">Cold Beer</div><div class="text-green-400 font-mono text-[10px] mt-1">$4</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Cocktail', 5.00)">
-                        <div class="text-2xl mb-1">🥃</div><div class="text-[9px] text-slate-300 font-bold uppercase">Cocktail</div><div class="text-green-400 font-mono text-[10px] mt-1">$5</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Champ Glass', 15.00)">
-                        <div class="text-2xl mb-1">🥂</div><div class="text-[9px] text-slate-300 font-bold uppercase">Champ Glass</div><div class="text-green-400 font-mono text-[10px] mt-1">$15</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Cigar', 20.00)">
-                        <div class="text-2xl mb-1">💨</div><div class="text-[9px] text-slate-300 font-bold uppercase">Premium Cigar</div><div class="text-green-400 font-mono text-[10px] mt-1">$20</div>
-                    </div>
-                    <div class="bg-slate-900 border border-amber-900/50 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Vintage Bottle', 100.00)">
-                        <div class="text-2xl mb-1">🍾</div><div class="text-[9px] text-amber-500 font-bold uppercase">Vintage Bottle</div><div class="text-green-400 font-mono text-[10px] mt-1">$100</div>
-                    </div>
+            <div class="table-logo-badge" aria-hidden="true">
+                <img src="logo.avif" alt="Brickyard Dominoes" class="w-32 drop-shadow-xl">
+            </div>
+
+            <div id="city-watermark" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none z-0 opacity-[0.07] flex flex-col items-center">
+                <h2 id="city-watermark-title" class="branding-font text-5xl md:text-7xl font-black text-white whitespace-nowrap">WELCOME TO THE BRICKYARD</h2>
+                <p id="city-watermark-sub" class="font-mono text-2xl text-amber-500 font-bold tracking-widest mt-2">INDOOR HIGH STAKES</p>
+            </div>
+
+            <div class="absolute top-4 right-4 z-20">
+                <button onclick="navigate('screen-lobby')" class="bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-4 py-2 rounded-lg text-xs font-bold tracking-wider uppercase shadow-lg transition-colors">Leave Table</button>
+            </div>
+
+            <div id="score-hud" class="absolute top-6 left-0 right-0 px-20 flex justify-between uppercase text-xs font-bold tracking-widest z-20 pointer-events-none">
+                <div class="bg-slate-900/90 p-4 rounded-xl border-l-4 border-amber-500 shadow-xl backdrop-blur">You: <span id="my-score-display" class="text-3xl block text-white mt-1">0</span></div>
+                <div class="bg-slate-900/90 p-4 rounded-xl border-r-4 border-red-500 text-right shadow-xl backdrop-blur">Opponent: <span class="text-3xl block text-white mt-1">0</span></div>
+            </div>
+
+            <div id="active-domino-train" class="absolute inset-x-4 top-1/2 -translate-y-1/2 flex items-center justify-center gap-2 overflow-x-auto p-4 z-10" aria-live="polite">
                 </div>
 
-                <h3 class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-3">Apparel & Kicks (Inventory)</h3>
-                <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Silk Durag', 10.00)">
-                        <div class="text-2xl mb-1">🧣</div><div class="text-[9px] text-slate-300 font-bold uppercase">Silk Durag</div><div class="text-green-400 font-mono text-[10px] mt-1">$10</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Ball Cap', 15.00)">
-                        <div class="text-2xl mb-1">🧢</div><div class="text-[9px] text-slate-300 font-bold uppercase">Ball Cap</div><div class="text-green-400 font-mono text-[10px] mt-1">$15</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Cowboy Hat', 45.00)">
-                        <div class="text-2xl mb-1">🤠</div><div class="text-[9px] text-slate-300 font-bold uppercase">Cowboy Hat</div><div class="text-green-400 font-mono text-[10px] mt-1">$45</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Shades', 120.00)">
-                        <div class="text-2xl mb-1">🕶️</div><div class="text-[9px] text-slate-300 font-bold uppercase">Designer Shades</div><div class="text-green-400 font-mono text-[10px] mt-1">$120</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Cowboy Boots', 150.00)">
-                        <div class="text-2xl mb-1">👢</div><div class="text-[9px] text-slate-300 font-bold uppercase">Leather Boots</div><div class="text-green-400 font-mono text-[10px] mt-1">$150</div>
-                    </div>
-                    <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center hover:border-amber-500 cursor-pointer transition-colors" onclick="selectGift('Air Max', 180.00)">
-                        <div class="text-2xl mb-1">👟</div><div class="text-[9px] text-slate-300 font-bold uppercase">Signature Kicks</div><div class="text-green-400 font-mono text-[10px] mt-1">$180</div>
-                    </div>
+            <div id="player-hand" class="absolute bottom-6 flex gap-4 h-28 z-20 bg-slate-900/60 p-4 rounded-2xl backdrop-blur-md border border-slate-800 shadow-2xl">
+                <div class="domino-tile skin-ivory w-12 h-20 flex-col shadow-lg hover:-translate-y-2 transition-transform" role="img" aria-label="Domino 6 and 6" tabindex="0">
+                    <div class="h-1/2 flex items-center justify-center" aria-hidden="true"><span class="text-2xl font-black">⚅</span></div>
+                    <div class="w-4/5 h-[2px] opacity-40 bg-slate-900" aria-hidden="true"></div>
+                    <div class="h-1/2 flex items-center justify-center" aria-hidden="true"><span class="text-2xl font-black">⚅</span></div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+
+    </main>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-functions-compat.js"></script>
+    <script src="firebase-config.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY_HERE",
-            authDomain: "YOUR_DOMAIN_HERE",
-            projectId: "YOUR_PROJECT_ID_HERE",
-            storageBucket: "YOUR_BUCKET_HERE",
-            messagingSenderId: "YOUR_MESSAGING_ID_HERE",
-            appId: "YOUR_APP_ID_HERE"
-        };
-
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
         const functions = firebase.functions();
 
-        auth.signInAnonymously().catch(err => console.error("Identity Sync Pending", err));
+        let currentUser = null;
+        let confirmationResult = null;
 
         // ==========================================
-        // GAME & RENDER LOGIC
+        // SPA NAVIGATION SYSTEM
         // ==========================================
+        function navigate(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            if(screenId === 'screen-landing') {
+                document.getElementById('global-header').classList.add('hidden');
+            } else {
+                document.getElementById('global-header').classList.remove('hidden');
+            }
+        }
+
+        // ==========================================
+        // UX POLISH: TOAST & LOADER ENGINE
+        // ==========================================
+        function showLoader(message = "PROCESSING...") {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.querySelector('h2').innerText = message;
+            overlay.classList.remove('hidden');
+        }
+
+        function hideLoader() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-slate-900 border-amber-500' : 'bg-red-950 border-red-500';
+            const icon = type === 'success' ? '🏆' : '⚠️';
+
+            toast.className = `${bgClass} border shadow-2xl p-4 rounded-xl flex items-center gap-3 transform translate-x-full transition-transform duration-300 pointer-events-auto`;
+            toast.innerHTML = `<span class="text-xl">${icon}</span><span class="text-white text-xs font-bold uppercase tracking-wider">${message}</span>`;
+
+            container.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.remove('translate-x-full'));
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // ==========================================
+        // ACTION BUTTON LOGIC
+        // ==========================================
+        function handlePlayClick() {
+            if (!currentUser) {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            } else {
+                navigate('screen-lobby');
+            }
+        }
+
+        function handleLocationClick() {
+            if (!currentUser) {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            } else {
+                document.getElementById('location-modal').classList.remove('hidden');
+            }
+        }
+
+        function handleLoginToggle() {
+            if (currentUser) {
+                auth.signOut().then(() => showToast("Logged Out Successfully", "success"));
+            } else {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            }
+        }
+
+        // ==========================================
+        // AUTHENTICATION LOGIC
+        // ==========================================
+        window.onload = () => {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                'size': 'normal',
+                'callback': (response) => {}
+            });
+        };
+
+        auth.onAuthStateChanged(async (user) => {
+            const loginBtn = document.getElementById('btn-login-top');
+            
+            if (!user) {
+                currentUser = null;
+                loginBtn.innerText = "LOG IN";
+            } else {
+                currentUser = user;
+                loginBtn.innerText = "LOG OUT";
+                
+                const playerRef = db.collection('player_stats').doc(user.uid);
+                try {
+                    const docSnap = await playerRef.get();
+                    if (!docSnap.exists) {
+                        const defaultProfile = {
+                            uid: user.uid,
+                            phoneNumber: user.phoneNumber, 
+                            displayName: "Hustler_" + user.uid.substring(0, 5),
+                            avatar: "🧢", 
+                            balance: 20.00,
+                            foodStamps: 100,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        };
+                        await playerRef.set(defaultProfile);
+                        updatePlayerHUD(defaultProfile);
+                    } else {
+                        updatePlayerHUD(docSnap.data());
+                    }
+                } catch (error) {
+                    console.error("Profile sync error:", error);
+                }
+            }
+        });
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+            resetAuthUI();
+        }
+
+        function sendOTP() {
+            const tosAccepted = document.getElementById('tos-checkbox').checked;
+            if (!tosAccepted) return showToast("You must accept the Terms of Service.", "error");
+
+            const phoneNumber = document.getElementById('phone-number').value.trim();
+            if(!phoneNumber.startsWith('+')) return showToast("Use international format (+1)", "error");
+            
+            showLoader("SENDING CODE...");
+            auth.signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
+                .then((result) => {
+                    hideLoader();
+                    confirmationResult = result;
+                    document.getElementById('phone-input-section').classList.add('hidden');
+                    document.getElementById('otp-input-section').classList.remove('hidden');
+                    showToast("SMS Sent!", "success");
+                }).catch((error) => {
+                    hideLoader();
+                    showToast("Failed to send code.", "error");
+                });
+        }
+
+        function verifyOTP() {
+            const code = document.getElementById('otp-code').value.trim();
+            showLoader("VERIFYING...");
+            confirmationResult.confirm(code).then((result) => {
+                hideLoader();
+                closeAuthModal();
+                showToast("Identity Secured.", "success");
+                
+                // Immediately drop them into the lobby upon successful login
+                navigate('screen-lobby');
+            }).catch((error) => {
+                hideLoader();
+                showToast("Invalid Code.", "error");
+            });
+        }
+
+        function resetAuthUI() {
+            document.getElementById('otp-input-section').classList.add('hidden');
+            document.getElementById('phone-input-section').classList.remove('hidden');
+        }
+
+        function updatePlayerHUD(profileData) {
+            if (profileData.displayName) document.getElementById('player-name-display').innerText = profileData.displayName;
+            if (profileData.avatar) document.getElementById('player-avatar-display').innerText = profileData.avatar;
+            if (profileData.balance !== undefined) document.getElementById('player-cash-display').innerText = `$${profileData.balance.toFixed(2)}`;
+            if (profileData.foodStamps !== undefined) document.getElementById('player-stamps-display').innerText = `🎫 ${profileData.foodStamps}`;
+        }
+
+        // ==========================================
+        // ENVIRONMENT MODAL LOGIC (The Parks)
+        // ==========================================
+        const cityData = {
+            'loc-default': { title: 'WELCOME TO THE BRICKYARD', sub: 'INDOOR HIGH STAKES' },
+            'loc-tulsa': { title: 'WELCOME TO BLACK WALL STREET', sub: 'TULSA, OK' },
+            'loc-atlanta': { title: 'WELCOME TO THE A', sub: 'ATLANTA, GA' },
+            'loc-chicago': { title: 'WELCOME TO THE SOUTH SIDE', sub: 'CHICAGO, IL' },
+            'loc-la': { title: 'WELCOME TO LEIMERT PARK', sub: 'LOS ANGELES, CA' },
+            'loc-nyc': { title: 'WELCOME TO RUCKER PARK', sub: 'HARLEM, NY' },
+            'loc-houston': { title: 'WELCOME TO H-TOWN', sub: 'HOUSTON, TX' },
+            'loc-brickyard': { title: 'WELCOME TO THE BRICKYARD', sub: 'INDOOR HIGH STAKES' }
+        };
+
+        function openLocationModal() { document.getElementById('location-modal').classList.remove('hidden'); }
+        function closeLocationModal() { document.getElementById('location-modal').classList.add('hidden'); }
+
+        function equipLocation(locClass) {
+            const bg = document.getElementById('app-background');
+            bg.className = bg.className.replace(/\bloc-\S+/g, '');
+            bg.classList.add(locClass);
+            
+            if(cityData[locClass]) {
+                document.getElementById('city-watermark-title').innerText = cityData[locClass].title;
+                document.getElementById('city-watermark-sub').innerText = cityData[locClass].sub;
+            }
+
+            closeLocationModal();
+            showToast("Playground updated.", "success");
+        }
+
         function equipSkin(skinClass) {
             const tiles = document.querySelectorAll('.domino-tile');
             tiles.forEach(tile => {
@@ -322,95 +660,61 @@
             });
         }
 
-        async function playTournamentRun(id) {
-            document.getElementById('matchmaking-screen').classList.add('hidden');
-            document.getElementById('score-hud').classList.remove('hidden');
-            document.getElementById('player-hand').classList.remove('hidden');
-            
-            // Mock Play Loop
-            let scoreCounter = 0;
-            const scoreInterval = setInterval(() => {
-                scoreCounter += 5;
-                document.getElementById('my-score-display').innerText = scoreCounter;
-                if (scoreCounter >= 35) {
-                    clearInterval(scoreInterval);
-                    alert(`Run Finished! Submitting ${scoreCounter} points...`);
-                    document.getElementById('matchmaking-screen').classList.remove('hidden');
-                    document.getElementById('score-hud').classList.add('hidden');
-                    document.getElementById('player-hand').classList.add('hidden');
-                    document.getElementById('my-score-display').innerText = '0';
-                }
-            }, 1000);
-        }
-
-        function renderDominoBoard(boardArray) {
-            const tableContainer = document.getElementById('game-table');
-            let boardContainer = document.getElementById('active-domino-train');
-            
-            if (boardContainer) boardContainer.innerHTML = '';
-            else {
-                boardContainer = document.createElement('div');
-                boardContainer.id = 'active-domino-train';
-                boardContainer.className = 'absolute inset-x-4 top-1/2 -translate-y-1/2 flex items-center justify-center gap-2 overflow-x-auto p-4 z-10';
-                tableContainer.appendChild(boardContainer);
-            }
-
-            const pipSymbols = [' ', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-
-            boardArray.forEach((tileValues) => {
-                const leftVal = tileValues[0];
-                const rightVal = tileValues[1];
-                const isDouble = (leftVal === rightVal);
-                const tileElement = document.createElement('div');
-                const selectedSkin = document.getElementById('skin-selector').value;
+        // ==========================================
+        // GAME & MATCHMAKING ENGINE
+        // ==========================================
+        async function playTournamentRun(tournamentId, entryType) {
+            showLoader("MATCHMAKING...");
+            try {
+                const matchMake = firebase.functions().httpsCallable('matchMakeAndDeal');
                 
-                // Traditional Orientation: Sideways Doubles
-                if (isDouble) {
-                    tileElement.className = `domino-tile ${selectedSkin} w-20 h-10 flex-row shadow-lg border border-amber-500/30`;
-                    tileElement.innerHTML = `<div class="w-1/2 h-full flex items-center justify-center"><span class="text-2xl font-black">${pipSymbols[leftVal]}</span></div><div class="h-4/5 w-[2px] opacity-30 bg-slate-900"></div><div class="w-1/2 h-full flex items-center justify-center"><span class="text-2xl font-black">${pipSymbols[rightVal]}</span></div>`;
-                } else {
-                    tileElement.className = `domino-tile ${selectedSkin} w-10 h-20 flex-col shadow-lg`;
-                    tileElement.innerHTML = `<div class="h-1/2 w-full flex items-center justify-center"><span class="text-2xl font-black">${pipSymbols[leftVal]}</span></div><div class="w-4/5 h-[2px] opacity-30 bg-slate-900"></div><div class="h-1/2 w-full flex items-center justify-center"><span class="text-2xl font-black">${pipSymbols[rightVal]}</span></div>`;
+                let wagerAmt = 0;
+                if (entryType === 'cash') {
+                    if (tournamentId === 'yard_h2h') wagerAmt = 0.60;
+                    else if (tournamentId === 'block_h2h') wagerAmt = 6.00;
+                    else if (tournamentId === 'penthouse_h2h') wagerAmt = 300.00;
+                    else wagerAmt = 2.50; 
                 }
-                boardContainer.appendChild(tileElement);
-            });
-        }
+                
+                const response = await matchMake({ 
+                    wager: wagerAmt, 
+                    mode: entryType === 'stamps' ? 'ai_tournament' : 'multiplayer',
+                    difficulty: 'hard' 
+                });
 
-        // ==========================================
-        // STORE & SOCIAL LOGIC
-        // ==========================================
-        function openGiftStore() {
-            document.getElementById('gift-store-modal').classList.remove('hidden');
-        }
+                hideLoader();
 
-        function closeGiftStore() {
-            document.getElementById('gift-store-modal').classList.add('hidden');
-        }
+                if (response.data.status === 'waiting') {
+                    showToast("Looking for an opponent... stay frosty.", "success");
+                    return;
+                }
 
-        function selectGift(itemName, cost) {
-            closeGiftStore();
-            const confirmPurchase = confirm(`Buy ${itemName} for $${cost.toFixed(2)}?`);
-            if(confirmPurchase) {
-                const chatFeed = document.getElementById('chat-feed');
-                chatFeed.innerHTML += `
-                <div class="flex flex-col gap-1 mt-3">
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-amber-500 font-bold text-xs uppercase tracking-wider">You</span>
-                    </div>
-                    <div class="bg-amber-950/30 border border-amber-900/50 rounded p-1.5 flex items-center gap-2 w-max">
-                        <span class="text-lg">🎁</span>
-                        <span class="text-[10px] text-amber-500 font-mono">Purchased a ${itemName} for $${cost.toFixed(2)}</span>
-                    </div>
-                </div>`;
-                chatFeed.scrollTop = chatFeed.scrollHeight;
-                alert(`Transaction Complete! ${itemName} has been added to your inventory.`);
+                if (response.data.status === 'matched') {
+                    navigate('screen-game');
+                    const opponentText = response.data.isAI ? response.data.opponentName : "a Live Player";
+                    showToast(`Matched against ${opponentText}!`, 'success');
+                    
+                    let scoreCounter = 0;
+                    document.getElementById('my-score-display').innerText = scoreCounter;
+                    const scoreInterval = setInterval(() => {
+                        scoreCounter += 5;
+                        document.getElementById('my-score-display').innerText = scoreCounter;
+                        if (scoreCounter >= 35) {
+                            clearInterval(scoreInterval);
+                            showToast(`Run Finished! Submitted ${scoreCounter} points.`, 'success');
+                            setTimeout(() => navigate('screen-lobby'), 2000);
+                        }
+                    }, 1000);
+                }
+            } catch (error) {
+                hideLoader();
+                showToast("Failed to join table.", "error");
             }
         }
 
         function sendChatMessage() {
             const input = document.getElementById('chat-input');
             if (input.value.trim() === '') return;
-            
             const chatFeed = document.getElementById('chat-feed');
             chatFeed.innerHTML += `
             <div class="flex flex-col gap-1 mt-3">
@@ -421,11 +725,6 @@
             </div>`;
             input.value = '';
             chatFeed.scrollTop = chatFeed.scrollHeight;
-        }
-
-        function generateInvite() {
-            const mockCode = "BRICK" + Math.floor(Math.random() * 999);
-            alert(`Your $20 Referral Code is: ${mockCode}\nShare link: brickyard-dominoes.com/invite/${mockCode}`);
         }
     </script>
 </body>
