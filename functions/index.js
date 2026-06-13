@@ -1,4 +1,3 @@
-
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 const { onMessagePublished } = require("firebase-functions/v2/pubsub");
